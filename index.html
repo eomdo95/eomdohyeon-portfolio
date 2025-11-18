@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엄도현 - HR 전문가 여정</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2c82ff 0%, #1a5fd9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .hero .tagline {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.6s both;
+            line-height: 1.4;
+        }
+        
+        .hero .story {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid white;
+            border-radius: 25px;
+            position: relative;
+        }
+        
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: scroll 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        @keyframes scroll {
+            0% { top: 10px; opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #2c82ff, #1a5fd9);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 4rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 52%;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 52%;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #2c82ff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-date {
+            color: #2c82ff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-company {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        .timeline-role {
+            color: #718096;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .timeline-description {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .project-header {
+            background: linear-gradient(135deg, #2c82ff 0%, #1a5fd9 100%);
+            padding: 2rem;
+            color: white;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-company {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .project-body {
+            padding: 2rem;
+        }
+        
+        .project-goal {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #2c82ff;
+        }
+        
+        .project-goal h4 {
+            color: #2c82ff;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .project-result {
+            background: #f0fff4;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #48bb78;
+        }
+        
+        .project-result h4 {
+            color: #48bb78;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .project-metrics {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .metric {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c82ff;
+        }
+        
+        .metric-label {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 0.3rem;
+        }
+        
+        .impact-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .impact-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .impact-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .impact-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2c82ff, #1a5fd9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .impact-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .impact-desc {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .testimonials-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 5rem;
+        }
+        
+        .testimonials-wrapper {
+            position: relative;
+            min-height: 420px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-card.active {
+            position: relative;
+            pointer-events: auto;
+        }
+        
+        .testimonial-quote {
+            font-size: 4rem;
+            color: #2c82ff;
+            opacity: 0.15;
+            font-family: Georgia, serif;
+            line-height: 1;
+            margin-bottom: -0.5rem;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 2rem;
+        }
+        
+        .testimonial-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-text strong {
+            color: #2c82ff;
+            font-weight: 600;
+        }
+        
+        .testimonial-highlight {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .highlight-tag {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+            color: #2c82ff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(44, 130, 255, 0.2);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2c82ff, #1a5fd9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(44, 130, 255, 0.3);
+        }
+        
+        .author-info {
+            flex: 1;
+        }
+        
+        .author-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.3rem;
+        }
+        
+        .author-role {
+            font-size: 0.95rem;
+            color: #718096;
+        }
+        
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-nav:hover {
+            background: linear-gradient(135deg, #2c82ff, #1a5fd9);
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 8px 25px rgba(44, 130, 255, 0.4);
+        }
+        
+        .testimonial-nav:hover span {
+            color: white;
+        }
+        
+        .testimonial-nav span {
+            font-size: 2rem;
+            color: #2c82ff;
+            line-height: 1;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+        
+        .testimonial-nav.prev {
+            left: 0;
+        }
+        
+        .testimonial-nav.next {
+            right: 0;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 2.5rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #cbd5e0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot:hover {
+            background: #a0aec0;
+            transform: scale(1.3);
+        }
+        
+        .dot.active {
+            background: linear-gradient(135deg, #2c82ff, #1a5fd9);
+            width: 36px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(44, 130, 255, 0.4);
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .skill-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2c82ff, #1a5fd9);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 0;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .skill-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            color: #2d3748;
+        }
+        
+        .skill-description {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skill-summary {
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #2c82ff;
+            padding-left: 1rem;
+        }
+
+        .skill-bullets {
+            list-style: none;
+            padding-left: 0;
+            margin-top: auto;
+        }
+
+        .skill-bullets li {
+            background: #f0f4ff;
+            color: #4a5568;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .skill-bullets li:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bullets li strong {
+            color: #2c5282;
+            font-weight: 600;
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, #2c82ff 0%, #1a5fd9 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #2c82ff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .contact-btn.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .contact-btn.secondary:hover {
+            background: white;
+            color: #2c82ff;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 60px;
+                margin-right: 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .testimonials-container {
+                padding: 0 3.5rem;
+            }
+            
+            .testimonial-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .testimonial-quote {
+                font-size: 3rem;
+            }
+            
+            .testimonial-text {
+                font-size: 1rem;
+            }
+            
+            .testimonial-nav {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .testimonial-nav span {
+                font-size: 1.8rem;
+            }
+            
+            .author-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>엄도현</h1>
+            <p class="subtitle">인사(채용) 담당자</p>
+            <p class="tagline">"채용 전문가로,<br>연결의 가치를 실현하다"</p>
+            <p class="story">
+                훌륭한 가이드가 <strong>고객의 여행 경험</strong>을 좌우하듯, 뛰어난 인재 한 명이 기업의 성패를 결정짓습니다.<br>
+                여행업에서 고객의 니즈를 파악하고 최적의 상품을 기획했던 경험을 바탕으로, 이제는 <strong>기업의 비전과 후보자의 역량을 연결하는 최고의 채용 경험</strong>을 설계합니다.<br>
+                고객에게 최고의 여행 환경을 만들었던 경험을 통해, <strong>구성원들에게 업무에 몰입할 수 있는 환경</strong>을 조성하겠습니다.
+            </p>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('journey').scrollIntoView({behavior: 'smooth'})">
+            <span></span>
+        </div>
+    </section>
+
+    <section class="section" id="journey">
+        <h2 class="section-title">나의 여정</h2>
+        <p class="section-subtitle">노련한 가이드가 안전하고 즐거운 여행 환경을 만들 듯, 훌륭한 인사 시스템이 구성원의 최대 몰입을 이끌어 기업 성장에 기여합니다.</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2025.06 ~ 현재</div>
+                    <div class="timeline-company">(주)에이팀벤처스</div>
+                    <div class="timeline-role">인턴 · CAPA Work</div>
+                    <div class="timeline-description">
+                        고객의 니즈를 파악하고 문제를 해결했던 이전의 모든 경험은 '사람'이라는 공통분모를 가지고 있었습니다. <strong>고객 경험 설계 역량을 인재 영입에 적용</strong>하고자 HR 직무로 전환했으며, 외국인 채용 컨설팅을 담당하며 채용 Full-cycle 관리 경험을 쌓고 있습니다. E-7 비자 소지 외국인을 창원 소재 기업에 최초 매칭하는 성과를 달성했으며, 비자별 채용 가이드를 체계화하여 전문성을 강화했습니다.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2023.10 ~ 2025.02</div>
+                    <div class="timeline-company">NHN여행박사</div>
+                    <div class="timeline-role">사원 · 영업부</div>
+                    <div class="timeline-description">
+                        와이리에서의 경험을 바탕으로, 더 큰 규모의 조직에서 <strong>고객 경험 설계와 데이터 기반 마케팅</strong> 역량을 심화했습니다. 동남아 여행상품 기획과 판매를 담당하며 고객 경험 설계의 중요성을 배웠고, 키워드 광고 운영과 인플루언서 여행 기획을 통해 <strong>정량적 데이터 분석 및 의사결정 능력</strong>을 키웠습니다.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2021.11 ~ 2023.03</div>
+                    <div class="timeline-company">(주)와이리</div>
+                    <div class="timeline-role">팀장 · 운영팀</div>
+                    <div class="timeline-description">
+                        채용 브랜딩 '와이리 별동대'를 기획하며 <strong>인재 발굴과 육성의 중요성을 처음 인식</strong>했습니다. 신규사업(2030 레저+여행)으로 5천만원 이상의 매출을 달성했으며, 엑스트라넷 개발에 참여하여 매칭률을 37% 향상시키며 <strong>데이터 기반의 문제 해결 능력</strong>을 증명했습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #f7fafc;">
+        <h2 class="section-title">주요 프로젝트</h2>
+        <p class="section-subtitle">데이터와 실행력으로 증명한 성과들</p>
+        
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">극초기 스타트업 전략적 채용</div>
+                    <div class="project-company">(주)와이리 | 기여도 80%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>문제 상황</h4>
+                        <p>3인 극초기 스타트업, 마케팅+디자인 겸직 인재 필요하나 예산 제약</p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 10px;">
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>전략적 솔루션:</strong></p>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 0.3rem;">• 채널 재정의: 대학 커뮤니티로 전환</p>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 0.3rem;">• 기준 변경: 경력→경험+잠재력 중심</p>
+                        <p style="font-size: 0.9rem; color: #4a5568;">• 비전 제시: 성장 기회 강조</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">-23%</div>
+                                <div class="metric-label">월간 마케팅 비용<br>(외주 업체 비율 감소)</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">100%</div>
+                                <div class="metric-label">목표 달성률<br>(채용)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">문제 해결형 워크숍 설계</div>
+                    <div class="project-company">(주)와이리 | 기여도 70%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>문제 상황</h4>
+                        <p>신규 사업 출시 시 업무 모호성과 경영진 불신으로 조직 와해 위기</p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #fff; border-radius: 10px;">
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>전략적 솔루션:</strong></p>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 0.3rem;">• 현장 리허설 워크숍 직접 설계</p>
+                        <p style="font-size: 0.9rem; color: #4a5568; margin-bottom: 0.3rem;">• 크로스 펑셔널 협업으로 업무 명확화</p>
+                        <p style="font-size: 0.9rem; color: #4a5568;">• 경영진 참여로 신뢰 구조 구축</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">-15%</div>
+                                <div class="metric-label">운영 오류 발생률</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">회복</div>
+                                <div class="metric-label">조직 신뢰도</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">와이리 별동대 채용 브랜딩</div>
+                    <div class="project-company">(주)와이리 | 기여도 70%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>목표</h4>
+                        <p>여행 가이드 인력 부족 문제 해결 및 서비스 품질 향상</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">4회</div>
+                                <div class="metric-label">월 서비스 횟수</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">4.7</div>
+                                <div class="metric-label">서비스 만족도</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">신규사업 기획 및 운영</div>
+                    <div class="project-company">(주)와이리 | 기여도 60%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>목표</h4>
+                        <p>2030 타겟 레저+여행 상품으로 수익 다각화</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">5,364만원</div>
+                                <div class="metric-label">총 매출 달성</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #718096;">
+                            서핑 3,461만원 | 글램핑 1,038만원 | 스키 865만원
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">엑스트라넷 개발 기획</div>
+                    <div class="project-company">(주)와이리 | 기여도 50%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>목표</h4>
+                        <p>호텔-인플루언서 매칭 과정 자동화 및 효율성 증대</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <div class="project-metrics">
+                            <div class="metric">
+                                <div class="metric-value">+37%</div>
+                                <div class="metric-label">매칭률 상승</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #718096;">
+                            일정 조율 문제 해결 및 객실 관리 자동화 구현
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-title">외국인 채용 가이드 제작</div>
+                    <div class="project-company">에이팀벤처스 | 기여도 100%</div>
+                </div>
+                <div class="project-body">
+                    <div class="project-goal">
+                        <h4>목표</h4>
+                        <p>비자별 채용 프로세스 표준화 및 전문성 강화</p>
+                    </div>
+                    <div class="project-result">
+                        <h4>결과</h4>
+                        <p style="margin-bottom: 1rem;">• E-7 비자 외국인 최초 채용 성공</p>
+                        <p style="margin-bottom: 1rem;">• 체계적인 비자별 가이드라인 확립</p>
+                        <p>• 영업 활용 자료 확보 및 전문성 인정</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">숫자로 증명하는 임팩트</h2>
+        <p class="section-subtitle">데이터 기반 의사결정과 실행력의 결과</p>
+        
+        <div class="projects-grid">
+            <div class="impact-card">
+                <div class="impact-number">23%</div>
+                <div class="impact-label">마케팅 비용 절감</div>
+                <div class="impact-desc">전략적 채용으로 운영 효율화</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">37%</div>
+                <div class="impact-label">매칭률 상승</div>
+                <div class="impact-desc">엑스트라넷 개발 주도</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">5,364만원</div>
+                <div class="impact-label">신규사업 매출</div>
+                <div class="impact-desc">0→1 사업 기획 및 운영</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">15%</div>
+                <div class="impact-label">오류 감소</div>
+                <div class="impact-desc">워크숍 설계로 업무 명확화</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">4.7</div>
+                <div class="impact-label">만족도 향상</div>
+                <div class="impact-desc">채용 브랜딩 성공</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-number">100%</div>
+                <div class="impact-label">가이드 체계화</div>
+                <div class="impact-desc">외국인 채용 전문성 확립</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" style="background: #f7fafc;">
+        <h2 class="section-title">핵심 역량</h2>
+        <p class="section-subtitle">긍정적인 채용 경험과 성과를 위한 5가지 실행 역량</p>
+        
+        <div class="skills-container">
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-number">1</div>
+                    <div class="skill-title">상황에 맞는 소통능력</div>
+                </div>
+                <div class="skill-description">
+                    <p class="skill-summary">
+                        상대의 배경과 이해수준을 고려한 맞춤형 커뮤니케이션으로 신뢰를 얻고 협업을 성공적으로 이끕니다.
+                    </p>
+                    <ul class="skill-bullets">
+                        <li><strong>외국인 채용 컨설팅:</strong> 문화적 차이를 극복하는 유연한 소통으로 E-7 비자 채용 최초 성공</li>
+                        <li><strong>여행 상품 기획:</strong> 다양한 국적의 여행객을 응대하며 얻은 공감 능력과 갈등 조정 능력</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-number">2</div>
+                    <div class="skill-title">멀티태스킹과 일정 관리</div>
+                </div>
+                <div class="skill-description">
+                    <p class="skill-summary">
+                        다양한 업무를 동시에 수행하며, 우선순위 설정과 체계적인 시간 관리로 모든 일정을 정확하게 완수합니다.
+                    </p>
+                    <ul class="skill-bullets">
+                        <li><strong>채용 프로세스:</strong> 복수의 포지션 관리, 기업 미팅 조율, 보고서 작성을 동시 수행</li>
+                        <li><strong>신규 사업 운영:</strong> 상품 기획, 마케팅, 현장 운영 등 전반의 일정을 체계적으로 관리</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-number">3</div>
+                    <div class="skill-title">꼼꼼한 업무 처리</div>
+                </div>
+                <div class="skill-description">
+                    <p class="skill-summary">
+                        채용 업무의 작은 실수가 기업 신뢰도에 미치는 영향을 인지하고, 확인 프로세스를 통해 정확성을 확보합니다.
+                    </p>
+                    <ul class="skill-bullets">
+                        <li><strong>활용 툴:</strong> ERP와 구글 워크스페이스를 활용하여 데이터의 정확성과 업무 효율성 동시 확보</li>
+                        <li><strong>프로세스 개선:</strong> 비자 서류, 계약서 등 중요 문서의 크로스체크 프로세스 습관화</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-number">4</div>
+                    <div class="skill-title">학습력과 시스템 적응력</div>
+                </div>
+                <div class="skill-description">
+                    <p class="skill-summary">
+                        새로운 지식과 툴을 신속하게 습득하고, 팀원들과 공유하여 조직 전체의 업무 효율성을 높입니다.
+                    </p>
+                    <ul class="skill-bullets">
+                        <li><strong>지식 체계화:</strong> 복잡한 비자 절차를 학습하고 체계적으로 정리하여 '외국인 채용 가이드' 제작</li>
+                        <li><strong>툴 활용:</strong> Notion, Slack 등 새로운 협업 툴을 빠르게 습득하고 팀 내 활용도 증대에 기여</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-header">
+                    <div class="skill-number">5</div>
+                    <div class="skill-title">피드백 수용과 개선</div>
+                </div>
+                <div class="skill-description">
+                    <p class="skill-summary">
+                        여행 상품의 고객 만족도를 개선했듯, 지원자 피드백을 능동적으로 반영하여 채용 경험(CX)을 개선합니다.
+                    </p>
+                    <ul class="skill-bullets">
+                        <li><strong>채용 경험(CX) 개선:</strong> 지원자 피드백을 반영, 면접 안내 문자에 회사 소개 자료를 추가하여 긍정 반응 확보</li>
+                        <li><strong>서비스 만족도 향상:</strong> '와이리 별동대' 운영 시 만족도 피드백을 통해 서비스 품질을 4.2점에서 4.7점으로 향상</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">함께 일한 동료들의 이야기</h2>
+        <p class="section-subtitle">실제 협업 경험을 통해 본 도현님</p>
+        
+        <div class="testimonials-container">
+            <button class="testimonial-nav prev" onclick="previousTestimonial()">
+                <span>‹</span>
+            </button>
+            
+            <div class="testimonials-wrapper">
+                <div class="testimonial-card active visible">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            도현님은 업무도 업무지만 <strong>항상 즐겁게 일할 수 있는 분위기를 만들어 주셔서</strong> 와이리에서 함께 많은 프로젝트를 진행하더라도 지치지 않고 재밌게 할 수 있었습니다. 가끔 실수를 하면 그 부분에 대해서 강하게 말씀하실 때도 있었지만 지금 생각해보면 <strong>도움이 되는 얘기</strong>였던 거 같아요.
+                        </p>
+                        <div class="testimonial-highlight">
+                            <span class="highlight-tag">협업 분위기</span>
+                            <span class="highlight-tag">솔직한 피드백</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">임</div>
+                        <div class="author-info">
+                            <div class="author-name">임윤희</div>
+                            <div class="author-role">마케터 · (주)와이리 전 동료</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            사회생활을 와이리 인턴으로 첫 시작을 하였습니다. 운영팀에서 인플루언서 마케팅, 신규 프로젝트를 기획하며 <strong>꼼꼼하게 업무를 할 수 있는 방법을 배울 수 있었습니다.</strong> 도현 님은 항상 캘린더를 활용해서 일정을 관리하셔서 저도 지금 그렇게 업무를 하고 있어요.
+                        </p>
+                        <div class="testimonial-highlight">
+                            <span class="highlight-tag">꼼꼼한 업무 처리</span>
+                            <span class="highlight-tag">체계적 일정 관리</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">이</div>
+                        <div class="author-info">
+                            <div class="author-name">이건웅</div>
+                            <div class="author-role">인턴 · (주)와이리 전 동료</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            동남아 팀에서 도현이가 <strong>센스가 있다고 생각한 순간</strong>이 있습니다. 해피콜(홈쇼핑 상품 상담 예약) 업무를 해야할 때 자기가 담당하는 지역의 상품이 아닌 다른 담당자의 상품이더라도 <strong>진행상황을 파악하고 도움의 요청을 하기 전에 업무를 도와주곤</strong> 했습니다.
+                        </p>
+                        <div class="testimonial-highlight">
+                            <span class="highlight-tag">선제적 지원</span>
+                            <span class="highlight-tag">팀워크</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">노</div>
+                        <div class="author-info">
+                            <div class="author-name">노지성</div>
+                            <div class="author-role">과장 · NHN여행박사 전 상사</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="testimonial-nav next" onclick="nextTestimonial()">
+                <span>›</span>
+            </button>
+            
+            <div class="testimonial-dots">
+                <span class="dot active" onclick="goToTestimonial(0)"></span>
+                <span class="dot" onclick="goToTestimonial(1)"></span>
+                <span class="dot" onclick="goToTestimonial(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-content">
+            <h2 class="contact-title">준비된 HR 담당자</h2>
+            <p class="contact-subtitle">
+                데이터 기반의 채용 프로세스와 긍정적인 지원자 경험을 통해<br>
+                귀사의 인재 경쟁력 확보에 기여하겠습니다.
+            </p>
+            <div class="contact-buttons">
+                <a href="tel:010-7649-0047" class="contact-btn">
+                    <span style="margin-right: 0.5rem;">📱</span>010-7649-0047
+                </a>
+                <a href="mailto:ehgus1239@gmail.com" class="contact-btn secondary">
+                    <span style="margin-right: 0.5rem;">✉️</span>ehgus1239@gmail.com
+                </a>
+                <a href="https://eomdo95.notion.site/1430ae7c168f80ac9c58dfc02fdfc9e2?pvs=4" target="_blank" class="contact-btn secondary">포트폴리오 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        document.querySelectorAll('.project-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.15}s`;
+            observer.observe(card);
+        });
+        
+        document.querySelectorAll('.skill-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+        
+        document.querySelectorAll('.impact-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(card);
+        });
+        
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const dots = document.querySelectorAll('.dot');
+        
+        function showTestimonial(index) {
+            testimonials.forEach((card, i) => {
+                card.classList.remove('active', 'visible');
+            });
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonials[index].classList.add('active', 'visible');
+            dots[index].classList.add('active');
+            
+            currentTestimonial = index;
+        }
+        
+        function nextTestimonial() {
+            const next = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(next);
+        }
+        
+        function previousTestimonial() {
+            const prev = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(prev);
+        }
+        
+        function goToTestimonial(index) {
+            showTestimonial(index);
+        }
+        
+        setInterval(nextTestimonial, 8000);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousTestimonial();
+            if (e.key === 'ArrowRight') nextTestimonial();
+        });
+    </script>
+</body>
+</html>
